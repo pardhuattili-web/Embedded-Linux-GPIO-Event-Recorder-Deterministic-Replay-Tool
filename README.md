@@ -1,6 +1,6 @@
 # Embedded Linux GPIO Event Recorder & Deterministic Replay Tool
 
-[![C11](https://img.shields.io/badge/C-C11-blue.svg)](https://en.wikipedia.org/wiki/C11) [![Linux](https://img.shields.io/badge/platform-Linux-informational.svg)](https://kernel.org/) [![Tests](https://img.shields.io/badge/tests-host--side-green.svg)](#host-tests) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![C11](https://img.shields.io/badge/C-C11-blue.svg)](https://en.wikipedia.org/wiki/C11) [![Linux](https://img.shields.io/badge/platform-Linux-informational.svg)](https://kernel.org/) [![CI](https://github.com/pardhuattili-web/Embedded-Linux-GPIO-Event-Recorder-Deterministic-Replay-Tool/actions/workflows/host-tests.yml/badge.svg)](https://github.com/pardhuattili-web/Embedded-Linux-GPIO-Event-Recorder-Deterministic-Replay-Tool/actions/workflows/host-tests.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A small, testable Linux systems-programming project that records GPIO edge events with monotonic timestamps, filters mechanical switch bounce, writes portable CSV logs, and replays captured timing for repeatable debugging. Hardware access uses the Linux GPIO character-device API through **libgpiod**; the event-processing and replay core remains independent of hardware so it can be tested on an ordinary Linux computer.
 
