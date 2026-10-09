@@ -1,0 +1,5 @@
+sequence,elapsed_ns,line_offset,edge,value
+0,0,17,rising,1
+1,24000000,17,falling,0
+2,140000000,17,rising,1
+3,500000000,17,falling,0
