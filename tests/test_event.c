@@ -3,7 +3,6 @@
 
 #include <assert.h>
 #include <stdio.h>
-#include <string.h>
 
 int main(void)
 {
@@ -14,7 +13,7 @@ int main(void)
     assert(event_write_csv_header(f) == 0);
     assert(event_write_csv(f, &in) == 0);
     rewind(f);
-    assert(fgets((char[128]){0}, 128, f) != NULL);
+    { char header[128]; assert(fgets(header, sizeof(header), f) != NULL); }
     assert(event_read_csv(f, &out) == 1);
     assert(out.sequence == in.sequence);
     assert(out.elapsed_ns == in.elapsed_ns);
