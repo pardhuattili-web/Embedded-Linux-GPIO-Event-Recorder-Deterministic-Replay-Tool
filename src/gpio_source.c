@@ -2,14 +2,7 @@
 #include "gpio_source.h"
 #include "debounce.h"
 
-#include <time.h>
 
-static uint64_t monotonic_ns(void)
-{
-    struct timespec ts;
-    if (clock_gettime(CLOCK_MONOTONIC, &ts) != 0) return 0;
-    return (uint64_t)ts.tv_sec * 1000000000ULL + (uint64_t)ts.tv_nsec;
-}
 
 int gpio_source_demo(FILE *output, const demo_source_options_t *options)
 {
@@ -18,11 +11,10 @@ int gpio_source_demo(FILE *output, const demo_source_options_t *options)
         {300, 1}, {303, 0}, {360, 1}, {700, 0}, {730, 0}
     };
     debounce_state_t debounce;
-    uint64_t start, duration_ns;
+    uint64_t duration_ns;
     uint64_t sequence = 0;
     int accepted = 1;
     if (output == NULL || options == NULL) return -1;
-    start = monotonic_ns();
     duration_ns = options->duration_ms * 1000000ULL;
     debounce_init(&debounce, options->debounce_ms * 1000000ULL, 1);
     if (event_write_csv_header(output) != 0) return -1;
@@ -49,6 +41,5 @@ int gpio_source_demo(FILE *output, const demo_source_options_t *options)
             }
         }
     }
-    (void)start;
     return accepted - 1;
 }
