@@ -57,7 +57,6 @@ int event_read_csv(FILE *stream, gpio_event_t *event)
     char value_text[8];
     char *fields[5];
     char *cursor;
-    char *comma;
     uint64_t seq, elapsed, line_num;
     event_edge_t edge;
     if (stream == NULL || event == NULL) return -1;
@@ -71,7 +70,7 @@ int event_read_csv(FILE *stream, gpio_event_t *event)
     cursor = line;
     for (int i = 0; i < 4; ++i) {
         fields[i] = cursor;
-        comma = strchr(cursor, ',');
+        char *comma = strchr(cursor, ',');
         if (comma == NULL) return -1;
         *comma = '\0';
         cursor = comma + 1;
