@@ -1,0 +1,18 @@
+[Unit]
+Description=Embedded Linux GPIO Event Recorder (example unit)
+After=multi-user.target
+
+[Service]
+Type=oneshot
+User=gpio-recorder
+Group=gpio
+WorkingDirectory=/opt/gpio-event-recorder
+ExecStart=/opt/gpio-event-recorder/build/gpio-recorder record --source demo --duration-ms 1500 --output /var/log/gpio-event-recorder/events.csv
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log/gpio-event-recorder
+
+[Install]
+WantedBy=multi-user.target
