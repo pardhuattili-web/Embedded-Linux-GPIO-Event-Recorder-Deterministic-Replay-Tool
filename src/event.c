@@ -3,6 +3,7 @@
 
 #include <errno.h>
 #include <inttypes.h>
+#include <limits.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -53,7 +54,6 @@ static int parse_u64(const char *s, uint64_t *out)
 int event_read_csv(FILE *stream, gpio_event_t *event)
 {
     char line[256];
-    char edge_text[16];
     char value_text[8];
     char *fields[5];
     char *cursor;
@@ -81,12 +81,10 @@ int event_read_csv(FILE *stream, gpio_event_t *event)
     if (parse_u64(fields[0], &seq) != 0 ||
         parse_u64(fields[1], &elapsed) != 0 ||
         parse_u64(fields[2], &line_num) != 0 ||
-        line_num > UINT32_MAX ||
+        line_num > UINT_MAX ||
         event_edge_parse(fields[3], &edge) != 0) return -1;
-    (void)strncpy(edge_text, fields[3], sizeof(edge_text)-1);
-    edge_text[sizeof(edge_text)-1] = '\0';
-    (void)strncpy(value_text, fields[4], sizeof(value_text)-1);
-    value_text[sizeof(value_text)-1] = '\0';
+    if (strlen(fields[4]) >= sizeof(value_text)) return -1;
+    (void)strcpy(value_text, fields[4]);
     if ((strcmp(value_text, "0") != 0 && strcmp(value_text, "1") != 0) ||
         ((edge == EVENT_EDGE_RISING) != (strcmp(value_text, "1") == 0))) return -1;
     event->sequence = seq;
